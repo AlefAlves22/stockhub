@@ -1,4 +1,4 @@
-D# Stock Hub
+# Stock Hub
 📦 O StockHub é uma solução centralizada e intuitiva desenvolvida para otimizar, simplificar e automatizar a gestão de inventários e processos logísticos. <br>
 🎯 O objetivo do sistema é oferecer total visibilidade sobre o fluxo de mercadorias, permitindo um controlo preciso desde a entrada de produtos até ao acompanhamento de métricas de desempenho.
 
