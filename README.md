@@ -2,7 +2,7 @@
 📦 O StockHub é uma solução centralizada e intuitiva desenvolvida para otimizar, simplificar e automatizar a gestão de inventários e processos logísticos. <br>
 🎯 O objetivo do sistema é oferecer total visibilidade sobre o fluxo de mercadorias, permitindo um controlo preciso desde a entrada de produtos até ao acompanhamento de métricas de desempenho.
 
-Como Executar o Projeto Localmente
+## Como Executar o Projeto Localmente
 Para rodar este projeto em sua máquina, será necessário ter instalado um ambiente de servidor local ( PHP ) e o banco de dados PostgreSQL .
 
 Pré-requisitos
@@ -12,9 +12,9 @@ Git instalado na máquina.
 Passo 1: Clonar o Repositório
 Abra o terminal e execute:
 
-# Clone este repositório
+### Clone este repositório
 git clone https://github.com/AlefAlves22/stockhub_SENAI.git
-# Acesse a pasta do projeto
+## Acesse a pasta do projeto
 cd geek-hub
 Passo 2: Configurar o Banco de Dados (Restaurar o Dump)
 O projeto já conta com um arquivo de dump.sql) com toda a estrutura das tabelas (possivelmente dados iniciais) localizada na pasta /db/. Siga os passos abaixo para recriar o banco no seu PostgreSQL:
@@ -29,13 +29,13 @@ DROP DATABASE IF EXISTS [stockhub];
 CREATE DATABASE [stockhub];
 \q
 4 - Navegue para a pasta dbdo projeto clonado e restaure o banco de dados executando o seguinte comando:
-# Supondo que você esteja na raiz do projeto clonado
+### Supondo que você esteja na raiz do projeto clonado
 cd db
 
-# Restaura o banco de dados
+### Restaura o banco de dados
 psql -U postgres -d stockhub -f dump_shub.sql
 
-# Volte para a raiz do projeto
+### Volte para a raiz do projeto
 cd ..
 Passo 3: Configurar a Conexão no PHP
 1 - Na raiz do projeto, abra o arquivo connect.php.
@@ -63,7 +63,7 @@ Especificação de Requisitos de Software
 Especificação dos Requisitos de Software (SRE)
 Estrutura Baseada na ISO/IEC/IEEE 29148:2018
 
-## 1. Funçõs do projeto
+## 1. Funções do projeto
 
 - <strong>Cadastrar produtos (CREATE):  </strong> Para começar, o usuário deverá cadastrar um produto para que ele apareça na lista de estoque. No cadastro, será possível informar dados como:
     - Nome do produto
