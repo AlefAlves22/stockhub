@@ -2,6 +2,67 @@
 📦 O StockHub é uma solução centralizada e intuitiva desenvolvida para otimizar, simplificar e automatizar a gestão de inventários e processos logísticos. <br>
 🎯 O objetivo do sistema é oferecer total visibilidade sobre o fluxo de mercadorias, permitindo um controlo preciso desde a entrada de produtos até ao acompanhamento de métricas de desempenho.
 
+Como Executar o Projeto Localmente
+Para rodar este projeto em sua máquina, será necessário ter instalado um ambiente de servidor local ( PHP ) e o banco de dados PostgreSQL .
+
+Pré-requisitos
+PHP (v7.4 ou superior) habilitado com extensão pdo_pgsql.
+PostgreSQL instalado e rodar na porta 5432padrão).
+Git instalado na máquina.
+Passo 1: Clonar o Repositório
+Abra o terminal e execute:
+
+# Clone este repositório
+git clone https://github.com/AlefAlves22/stockhub_SENAI.git
+# Acesse a pasta do projeto
+cd geek-hub
+Passo 2: Configurar o Banco de Dados (Restaurar o Dump)
+O projeto já conta com um arquivo de dump.sql) com toda a estrutura das tabelas (possivelmente dados iniciais) localizada na pasta /db/. Siga os passos abaixo para recriar o banco no seu PostgreSQL:
+
+1 - Abra o terminalPrompt de Comando ou PowerShell).
+
+2 - Conecte-se ao PostgreSQL usando seu usuário principal (geralmente postgres):
+
+psql -U postgres
+3 - Se o banco de dados já existir de testes anteriores, apague-o e crie um novo para evitar conflitos de tabelas. Dentro do terminal interativo do psql, digite:
+DROP DATABASE IF EXISTS [stockhub];
+CREATE DATABASE [stockhub];
+\q
+4 - Navegue para a pasta dbdo projeto clonado e restaure o banco de dados executando o seguinte comando:
+# Supondo que você esteja na raiz do projeto clonado
+cd db
+
+# Restaura o banco de dados
+psql -U postgres -d stockhub -f dump_shub.sql
+
+# Volte para a raiz do projeto
+cd ..
+Passo 3: Configurar a Conexão no PHP
+1 - Na raiz do projeto, abra o arquivo connect.php.
+
+2 - Altere as credenciais para representar em seu ambiente local PostgreSQL:
+
+$host = 'localhost';
+$port = '5432';
+$dbname = '[nome_bd]'; // O mesmo nome que criou no Passo 2
+$user = 'postgres'; // O seu usuário do PostgreSQL
+$password = 'sua_senha_aqui'; // A sua senha do PostgreSQL
+Passo 4: Acesse a Aplicação
+Com o banco de dados configurado, inicie o servidor embutido do PHP. -se de que seu terminal certifique-se de que está na raiz do projeto e execute:
+
+php -S 0.0.0.0:3007
+O servidor estará ativo! Agora, basta abrir seu navegador de preferência e acessar:
+
+http://localhost:3007
+Passo 5: Informações de entrada
+Utilize essas informações para entrar no sistema.
+
+E-mail : davi@geekhub.com Senha :1234
+
+Especificação de Requisitos de Software
+Especificação dos Requisitos de Software (SRE)
+Estrutura Baseada na ISO/IEC/IEEE 29148:2018
+
 ## 1. Funçõs do projeto
 
 - <strong>Cadastrar produtos (CREATE):  </strong> Para começar, o usuário deverá cadastrar um produto para que ele apareça na lista de estoque. No cadastro, será possível informar dados como:
