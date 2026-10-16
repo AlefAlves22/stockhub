@@ -66,10 +66,6 @@ O sistema deve ser acessível através de navegadores web modernos (como Google 
 
 ``` mermaid
 
----
-title: Estoque
----
-
 erDiagram
     produtos {
         int ID PK "AUTO INCREMENT"
