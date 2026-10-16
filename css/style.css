@@ -1,0 +1,305 @@
+/* ==========================================
+   STOCKHUB - SISTEMA DE GESTÃO DE ESTOQUE
+   Tema: Azul Corporativo / Modern SaaS
+   ========================================== */
+
+/* Importação da fonte moderna Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #1e40af;       /* Azul Escuro Principal */
+    --primary-hover: #1d4ed8; /* Azul Intermediário */
+    --primary-light: #eff6ff; /* Azul Bem Claro para Fundos */
+    --accent: #2563eb;        /* Azul Vibrante para Destaques */
+    --text-dark: #0f172a;     /* Texto Escuro */
+    --text-muted: #64748b;    /* Texto Secundário */
+    --bg-main: #f8fafc;       /* Fundo do Site */
+    --bg-card: #ffffff;       /* Fundo de Cards e Formulários */
+    --border: #e2e8f0;        /* Bordas Suaves */
+    --danger: #ef4444;        /* Erros / Botão Apagar */
+    --success: #10b981;       /* Mensagens de Sucesso */
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+/* Reset Geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ==========================================
+   1. CABEÇALHO / NAV (header.php)
+   ========================================== */
+header {
+    background: linear-gradient(135deg, #1e3a8a 0%, var(--primary) 100%);
+    box-shadow: var(--shadow);
+    padding: 0.8rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+header div {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+header a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.55rem 1rem;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+header a:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+}
+
+header div:last-child a {
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+header div:last-child a:hover {
+    background-color: #ffffff;
+    color: var(--primary);
+}
+
+/* ==========================================
+   2. CONTEÚDO PRINCIPAL (main / body)
+   ========================================== */
+main {
+    max-width: 900px;
+    width: 92%;
+    margin: 2.5rem auto;
+    background-color: var(--bg-card);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--border);
+    flex: 1;
+}
+
+/* Títulos */
+h1 {
+    color: var(--primary);
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 0.5rem;
+}
+
+h2 {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+h5 {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    margin-top: 1.5rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+/* ==========================================
+   3. FORMULÁRIOS & CAMPOS (POST / INPUTS)
+   ========================================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-top: 1rem;
+}
+
+label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    margin-top: 0.8rem;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+input[type="tel"],
+input[type="decimal"] {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background-color: #fafafa;
+    transition: all 0.2s ease-in-out;
+    margin-bottom: 0.5rem;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* ==========================================
+   4. BOTÕES & LINKS DE AÇÃO
+   ========================================== */
+button,
+input[type="submit"],
+input[type="reset"] {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 1rem;
+    margin-right: 0.5rem;
+}
+
+button[type="submit"],
+input[type="submit"] {
+    background-color: var(--primary);
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(30, 64, 175, 0.2);
+}
+
+button[type="submit"]:hover,
+input[type="submit"]:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(30, 64, 175, 0.3);
+}
+
+input[type="reset"] {
+    background-color: #e2e8f0;
+    color: var(--text-dark);
+}
+
+input[type="reset"]:hover {
+    background-color: #cbd5e1;
+}
+
+/* Botão ou Link de Apagar/Deletar */
+input[value="Apagar"],
+input[value="Excluir"] {
+    background-color: var(--danger) !important;
+    color: #ffffff !important;
+}
+
+input[value="Apagar"]:hover,
+input[value="Excluir"]:hover {
+    background-color: #dc2626 !important;
+}
+
+/* Links do Menu de Navegação da Aplicação (a em páginas de opções) */
+main a {
+    display: inline-block;
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 0.6rem 1.2rem;
+    margin: 0.4rem 0;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 6px;
+    background-color: var(--primary-light);
+    transition: all 0.2s ease;
+    width: 100%;
+    max-width: 400px;
+}
+
+main a:hover {
+    background-color: #dbeafe;
+    transform: translateX(4px);
+    border-color: var(--accent);
+}
+
+/* ==========================================
+   5. RELATÓRIOS & EXIBIÇÃO DE DADOS (hr, etc)
+   ========================================== */
+hr {
+    border: 0;
+    height: 1px;
+    background: var(--border);
+    margin: 1.5rem 0;
+}
+
+/* Caso o PHP exiba os relatórios em linhas separadas */
+main strong {
+    color: var(--primary);
+}
+
+/* ==========================================
+   6. RODAPÉ (footer.php)
+   ========================================== */
+footer, h1:has(+ footer), body > h1:last-child {
+    text-align: center;
+    padding: 1.5rem;
+    background-color: #0f172a;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin-top: auto;
+}
+
+/* Ajuste específico para a marca/propaganda no footer */
+footer h1, body > h1:last-child {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    border: none;
+    margin: 0;
+    padding: 1rem;
+    background-color: #0f172a;
+}
+
+/* ==========================================
+   7. RESPONSIVIDADE
+   ========================================== */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        gap: 0.8rem;
+        padding: 1rem;
+    }
+
+    header div {
+        justify-content: center;
+        width: 100%;
+    }
+
+    main {
+        padding: 1.5rem;
+        margin: 1rem auto;
+    }
+}
