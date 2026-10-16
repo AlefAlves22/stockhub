@@ -28,8 +28,9 @@ psql -U postgres
 DROP DATABASE IF EXISTS [stockhub];
 CREATE DATABASE [stockhub];
 \q
-4 - Navegue para a pasta dbdo projeto clonado e restaure o banco de dados executando o seguinte comando:
-### Supondo que você esteja na raiz do projeto clonado
+
+4 - Navegue para a pasta dbdo projeto clonado e restaure o banco de dados executando o seguinte comando (Supondo que você esteja na raiz do projeto clonado):
+(Supondo que você esteja na raiz do projeto clonado)
 cd db
 
 ### Restaura o banco de dados
