@@ -392,6 +392,11 @@ C:.
     ├── logout.php
     └── verifica_user.php
 >>>>>>> 4a06397942fd88e477c42e7f61be431f6da2e987
-        
+```     
+## Protótipo
+
+Protótipo do site produzido:
+<img width="1510" height="716" alt="image" src="https://github.com/user-attachments/assets/cfdcba49-d1be-4c50-b1ab-4448037ddaae" />
+<img width="1459" height="798" alt="image" src="https://github.com/user-attachments/assets/a79f008d-95ac-4016-922f-bce76f356edd" />
 
 
