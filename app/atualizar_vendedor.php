@@ -18,7 +18,7 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Título exibido na aba do navegador -->
     <title>Atualizar Vendedor</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/stockhub/css/style.css">
 </head>
 
 <body>

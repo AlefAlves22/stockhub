@@ -18,7 +18,7 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Título exibido na aba do navegador -->
     <title>Atualizar Vendedor</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/stockhub/css/style.css">
 </head>
 
 <body>
@@ -28,9 +28,6 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <main>
         <!-- Formulário HTML que envia os dados informados via método POST para a própria página -->
         <form action="" method="post">
-            <!-- Campo de entrada para o ID do vendedor a ser atualizado (obrigatório) -->
-            <label for="id">ID: </label>
-            <input type="number" name="id" id="id" placeholder="Insira ID para atualizar" required><br>
 
             <!-- Campo para atualizar o Nome do Vendedor -->
             <label for="nome_vendedor">Nome: </label>
@@ -43,7 +40,7 @@ require_once __DIR__ . '/../login/verifica_user.php';
             <!-- Botão para redefinir/limpar os campos do formulário -->
             <input type="reset" value="Limpar">
             <!-- Botão de submissão do formulário -->
-            <input type="submit" value="Atualizar">
+            <input type="submit" value="Cadastrar">
 
         </form>
 
@@ -51,9 +48,8 @@ require_once __DIR__ . '/../login/verifica_user.php';
         // Verifica se a requisição foi realizada via método POST (quando o formulário é enviado)
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
             // Chama a função de atualização passando a conexão do BD e os dados informados no formulário
-            atualizar_vendedor(
-                $conexao,
-                $_POST['id'],         
+            cadastrar_vendedor(
+                $conexao,         
                 $_POST['nome_vendedor'],
                 $_POST['cpf']
             );

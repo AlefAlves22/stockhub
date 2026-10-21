@@ -9,6 +9,8 @@ require_once __DIR__ .'/../database/connect.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cadastrar Usuário</title>
+    <link rel="stylesheet" href="/stockhub/css/style.css">
+
 </head>
 <body>
     <?php include __DIR__ .'/../includes/header.php';?>
@@ -29,7 +31,7 @@ require_once __DIR__ .'/../database/connect.php';
         <?php
         if($_SERVER['REQUEST_METHOD'] == "POST"){
         cadastrar_user($conexao, $_POST['email'], $_POST['senha'], $_POST['nome'], $_POST['cpf']);
-        header("Location: /projeto_integrador/index.php");
+        header("Location: /stockhub/index.php");
         exit();
         }
         ?>

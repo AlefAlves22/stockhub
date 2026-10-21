@@ -15,7 +15,7 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="css/style.css">projeto_integrador
+    <link rel="stylesheet" href="/stockhub/css/style.css">
 </head>
 
 <body>
@@ -29,13 +29,13 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <h2>Escolha o que você quer: </h2>
     
     <!-- Link de navegação para a página de exclusão de produtos -->
-    <a href="projeto_integrador/app/delete.php">Excluir Produto</a> <br>
+    <a href="stockhub/app/delete.php">Excluir Produto</a> <br>
     
     <!-- Link de navegação para a página de exclusão de vendedores -->
-    <a href="projeto_integrador/app/delete_vendedor.php">Excluir Vendedor</a> <br>
+    <a href="stockhub/app/delete_vendedor.php">Excluir Vendedor</a> <br>
     
     <!-- Link de navegação para a página de exclusão de clientes -->
-    <a href="projeto_integrador/app/delete_cliente.php">Excluir Cliente</a> <br>
+    <a href="stockhub/app/delete_cliente.php">Excluir Cliente</a> <br>
     
     <!-- Inclui o rodapé padrão das páginas do sistema -->
     <?php include __DIR__ . '/../includes/footer.php'; ?>

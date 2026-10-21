@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php include __DIR__ . '/../includes/header.php'; ?>
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/stockhub/css/style.css">
 <h1>Registro de Venda</h1>
 
 <main>

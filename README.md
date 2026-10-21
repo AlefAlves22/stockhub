@@ -3,68 +3,94 @@
 🎯 O objetivo do sistema é oferecer total visibilidade sobre o fluxo de mercadorias, permitindo um controlo preciso desde a entrada de produtos até ao acompanhamento de métricas de desempenho.
 
 ## Como Executar o Projeto Localmente
-Para rodar este projeto em sua máquina, será necessário ter instalado um ambiente de servidor local ( PHP ) e o banco de dados PostgreSQL .
+Para rodar este projeto na sua máquina, será necessário ter instalado um ambiente de servidor local (PHP) e o banco de dados PostgreSQL.
 
-Pré-requisitos
-PHP (v7.4 ou superior) habilitado com extensão pdo_pgsql.
-PostgreSQL instalado e rodar na porta 5432padrão).
-Git instalado na máquina.
-Passo 1: Clonar o Repositório
-Abra o terminal e execute:
+### 2.1 Pré-Requisitos
+- PHP (v7.4 ou superior) habilitado com a extensão pdo_pgsql.
+- PostgreSQL instalado e em execução na porta padrão 5432.
+- Git instalado na máquina.
+- Navegador web atualizado.
 
-### Clone este repositório
-git clone https://github.com/AlefAlves22/stockhub_SENAI.git
-## Acesse a pasta do projeto
-cd geek-hub
-Passo 2: Configurar o Banco de Dados (Restaurar o Dump)
-O projeto já conta com um arquivo de dump.sql) com toda a estrutura das tabelas (possivelmente dados iniciais) localizada na pasta /db/. Siga os passos abaixo para recriar o banco no seu PostgreSQL:
+### 2.2 Passo 1: Clonar repositório
+Abra o terminal do seu sistema operacioal e clone o repositório executando:
+```bash
+# Clone este repositório
+git clone https://github.com/AlefAlves22/stockhub.git
 
-1 - Abra o terminalPrompt de Comando ou PowerShell).
+# Acesse a pasta do projeto
+cd stockhub
+```
 
-2 - Conecte-se ao PostgreSQL usando seu usuário principal (geralmente postgres):
+### 2.3 Passo 2: Configurar o Banco de Dados (Restore do Dump)
+O projeto inclui um arquivo de carga inicial chamado dump.sql. Siga as etapas para criar a base no PostgreSQL:
 
+1 - Abra o terminal e conecte-se ao PostgreSQL com o usuário administrador (postgres):
+
+```bash
 psql -U postgres
-3 - Se o banco de dados já existir de testes anteriores, apague-o e crie um novo para evitar conflitos de tabelas. Dentro do terminal interativo do psql, digite:
-DROP DATABASE IF EXISTS [stockhub];
-CREATE DATABASE [stockhub];
+```
+2 - Dentro do ambiente do psql, execute os comandos abaixo para recriar a base de dados zerada (se a base já existir, ela será substituída):
+```bash
+DROP DATABASE IF EXISTS stockhub;
+CREATE USER estoquista WITH PASSWORD estoque;
+CREATE DATABASE stockhub OWNER estoquista;
 \q
+```
+Atenção: a exclusão do banco apaga os dados existentes. Faça isso somente se não precisar preservá-los.
 
-4 - Navegue para a pasta dbdo projeto clonado e restaure o banco de dados executando o seguinte comando (Supondo que você esteja na raiz do projeto clonado):
-(Supondo que você esteja na raiz do projeto clonado)
+3 - Restaurar o banco de dados
+
+Agora, restaure a estrutura e os dados do arquivo SQL na base recém-criada.
+
+Se o arquivo dump.sql estiver na raiz do projeto::
+```bash
+# Restaura o banco de dados
+psql -U estoquista -d stockhub -f /database/dump.sql
+
+```
+
+Se o arquivo estiver dentro de uma pasta chamada database, utilize:
+```bash
+# Acesse a pasta db
 cd db
 
-### Restaura o banco de dados
-psql -U postgres -d stockhub -f dump_shub.sql
+# Restaura o banco de dados
+psql -U estoquista -d stockhub -f /database/dump.sql
 
-### Volte para a raiz do projeto
+# Volte para a raiz do projeto
 cd ..
-Passo 3: Configurar a Conexão no PHP
-1 - Na raiz do projeto, abra o arquivo connect.php.
 
-2 - Altere as credenciais para representar em seu ambiente local PostgreSQL:
+```
 
+### 2.4 Passo 3: Configurar a Conexão no PHP
+1 - Localize o arquivo de conexão presente em database/connect.php (ou na pasta equivalente do seu banco).
+
+2 - Abra o arquivo em seu editor e verifique se os dados de acesso correspondem ao seu ambiente PostgreSQL:
+``` bash
 $host = 'localhost';
 $port = '5432';
-$dbname = '[nome_bd]'; // O mesmo nome que criou no Passo 2
-$user = 'postgres'; // O seu usuário do PostgreSQL
-$password = 'sua_senha_aqui'; // A sua senha do PostgreSQL
-Passo 4: Acesse a Aplicação
-Com o banco de dados configurado, inicie o servidor embutido do PHP. -se de que seu terminal certifique-se de que está na raiz do projeto e execute:
+$dbname = 'stockhub';
+$user = 'estoquista';
+$password = 'estoque'; 
+```
+**Observação:** Certifique-se de que a conta de usuário estoquista existe no seu PostgreSQL e possui privilégios de leitura e escrita no banco stockhub.
 
-php -S 0.0.0.0:3007
-O servidor estará ativo! Agora, basta abrir seu navegador de preferência e acessar:
-
-http://localhost:3007
-Passo 5: Informações de entrada
-Utilize essas informações para entrar no sistema.
-
-E-mail : davi@geekhub.com Senha :1234
-
-Especificação de Requisitos de Software
-Especificação dos Requisitos de Software (SRE)
-Estrutura Baseada na ISO/IEC/IEEE 29148:2018
+### 2.5 Passo 4: Acessar a Aplicação
+No terminal, garanta que você está na raiz do projeto stockhub e suba o servidor embutido do PHP:
+```bash
+php -S localhost:8000
+```
+Abra o seu navegador e acesse a aplicação pelo endereço:
+```bash
+http://localhost:8000/
+```
+Caso o projeto esteja dentro de uma pasta chamada stockhub, iniciando o servidor na pasta anterior a ela, o endereço será:
+```bash
+http://localhost:8000/stockhub/
+```
 
 ## 1. Funções do projeto
+
 
 - <strong>Cadastrar produtos (CREATE):  </strong> Para começar, o usuário deverá cadastrar um produto para que ele apareça na lista de estoque. No cadastro, será possível informar dados como:
     - Nome do produto
@@ -254,3 +280,60 @@ graph LR
 |  | `nome_produto` | FK para identificar qual produto foi vendido | `varchar(255)` | `A-Z` | `NOT NULL` | 
 |  | `quantidade` | Quantidade do produto vendido | `number` | `0-9` | `NOT NULL` | 
 |  | `data_venda` | Data de quando foi realizada a venda | `datetime` | `0-9` | `NOT NULL` |
+
+## Estrutura das pastas
+C:.
+ª   docuentaþÒo.md
+ª   estrutura.txt
+ª   index.php
+ª   README.md
+ª   
++---app
+ª       atualizar.php
+ª       atualizar_cliente.php
+ª       atualizar_estoque.php
+ª       atualizar_produto.php
+ª       atualizar_vendedor.php
+ª       cadastrar.php
+ª       cadastrar_cliente.php
+ª       cadastra_vendedor.php
+ª       consultar.php
+ª       consultar_cliente.php
+ª       consultar_vendedor.php
+ª       create.php
+ª       delete.php
+ª       delete_cliente.php
+ª       delete_vendedor.php
+ª       excluir.php
+ª       pdv.php
+ª       select.php
+ª       select_cliente.php
+ª       select_geral.php
+ª       select_vendas.php
+ª       select_vendedor.php
+ª       select_w.php
+ª       venda.php
+ª       
++---css
+ª       style.css
+ª       
++---database
+ª       connect.php
+ª       dump.sql
+ª       
++---imagens
+ª       logo.png
+ª       
++---includes
+ª       footer.php
+ª       functions.php
+ª       header.php
+ª       
++---login
+        cadastra_user.php
+        login.php
+        logout.php
+        verifica_user.php
+        
+
+

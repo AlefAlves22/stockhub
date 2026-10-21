@@ -10,17 +10,17 @@
 <body>
 <header>
     <div>
-        <a href="/projeto_integrador/index.php">Início</a>
-        <a href="/projeto_integrador/app/cadastrar.php">Cadastrar</a>
-        <a href="/projeto_integrador/app/select_geral.php">Cadastros</a>
-        <a href="/projeto_integrador/app/consultar.php">Consultar</a>
-        <a href="/projeto_integrador/app/atualizar.php">Atualizar</a>
-        <a href="/projeto_integrador/app/excluir.php">Deletar</a>
-        <a href="/projeto_integrador/app/pdv.php">Vendas</a>
+        <a href="/stockhub/index.php">Início</a>
+        <a href="/stockhub/app/cadastrar.php">Cadastrar</a>
+        <a href="/stockhub/app/select_geral.php">Cadastros</a>
+        <a href="/stockhub/app/consultar.php">Consultar</a>
+        <a href="/stockhub/app/atualizar.php">Atualizar</a>
+        <a href="/stockhub/app/excluir.php">Deletar</a>
+        <a href="/stockhub/app/pdv.php">Vendas</a>
     </div>
     <div>
-        <a href="/projeto_integrador/login/login.php">Entrar</a>
-        <a href="/projeto_integrador/login/logout.php">Sair</a>
-        <a href="/projeto_integrador/login/cadastra_user.php">Cadastrar</a>
+        <a href="/stockhub/login/login.php">Entrar</a>
+        <a href="/stockhub/login/logout.php">Sair</a>
+        <a href="/stockhub/login/cadastra_user.php">Cadastrar</a>
     </div>
 </header>

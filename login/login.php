@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $_SESSION['id'] = $usuario['id'];
         
         // Redireciona o usuário autenticado para a página inicial do sistema
-        header("Location: /projeto_integrador/index.php");
+        header("Location: /stockhub/index.php");
         
         // Interrompe a execução do script para garantir que o redirecionamento ocorra sem vazamento de código
         exit();
@@ -38,6 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
 ?>
 <!-- Inclui o cabeçalho/menu padrão das páginas do sistema -->
 <?php include __DIR__ . '/../includes/header.php'; ?>
+    <link rel="stylesheet" href="/stockhub/css/style.css">
 
 <main>
     <!-- Título da página de login -->
@@ -69,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     <h5>Não tem cadastro?</h5> 
     
     <!-- Link para redirecionar à tela de cadastro de novos usuários -->
-    <a href="/projeto_integrador/login/cadastra_user.php">Cadastrar-se</a>
+    <a href="/stockhub/login/cadastra_user.php">Cadastrar-se</a>
 </main>
 
 <!-- Inclui o rodapé padrão das páginas do sistema -->
