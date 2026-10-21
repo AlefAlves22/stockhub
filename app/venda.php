@@ -3,7 +3,6 @@ session_start();
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../login/verifica_user.php';
 
-
 // Busca as listas para os datalists do HTML
 $clientes = vendas_cliente($conexao);
 $vendedor = vendas_vendedor($conexao);
@@ -70,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 ?>
 
 <?php include __DIR__ . '/../includes/header.php'; ?>
-
+<link rel="stylesheet" href="css/style.css">
 <h1>Registro de Venda</h1>
 
 <main>
