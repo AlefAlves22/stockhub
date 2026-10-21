@@ -352,4 +352,18 @@ Protótipo do site produzido:
 <img width="1510" height="716" alt="image" src="https://github.com/user-attachments/assets/cfdcba49-d1be-4c50-b1ab-4448037ddaae" />
 <img width="1459" height="798" alt="image" src="https://github.com/user-attachments/assets/a79f008d-95ac-4016-922f-bce76f356edd" />
 
+## 8. Considerações Finais
 
+O **StockHub** foi desenvolvido com o objetivo de entregar uma solução funcional, intuitiva e completa para a gestão de inventários e processos de vendas. Através da implementação da arquitetura em PHP e PostgreSQL, o sistema atende integralmente a todos os requisitos do CRUD, garantindo a integridade dos dados e a agilidade no controle de estoque.
+
+---
+
+### ✉️ Contato e Autoria
+
+Projeto desenvolvido por **Alef Alves**.
+
+* **GitHub:** [@AlefAlves22](https://github.com/AlefAlves22)
+* **Repositório do Projeto:** [StockHub](https://github.com/AlefAlves22/stockhub)
+
+---
+*Obrigado por visualizar o projeto! Se tiver alguma dúvida ou sugestão de melhoria, sinta-se à vontade para abrir uma Issue no repositório.*
