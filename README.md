@@ -214,7 +214,7 @@ erDiagram
     cliente ||--o{ vendas : "comtem em"
 ```
 
-## Fluxo de funcionamento
+## 4. Fluxo de funcionamento
 
 ```mermaid
 graph LR
@@ -244,7 +244,7 @@ graph LR
     end
 ```
 
-## Dicionário de Dados
+## 5. Dicionário de Dados
 
 | NOME DA TABELA | NOME DO CAMPO | DESCRIÇÃO DO CAMPO | TIPO DE DADO | MÁSCARA | OPÇÕES DE COLUNA | 
 | ----- | ----- | ----- | ----- | ----- | ----- | 
@@ -281,62 +281,7 @@ graph LR
 |  | `quantidade` | Quantidade do produto vendido | `number` | `0-9` | `NOT NULL` | 
 |  | `data_venda` | Data de quando foi realizada a venda | `datetime` | `0-9` | `NOT NULL` |
 
-<<<<<<< HEAD
-## Estrutura das pastas
-C:.
-ª   docuentaþÒo.md
-ª   estrutura.txt
-ª   index.php
-ª   README.md
-ª   
-+---app
-ª       atualizar.php
-ª       atualizar_cliente.php
-ª       atualizar_estoque.php
-ª       atualizar_produto.php
-ª       atualizar_vendedor.php
-ª       cadastrar.php
-ª       cadastrar_cliente.php
-ª       cadastra_vendedor.php
-ª       consultar.php
-ª       consultar_cliente.php
-ª       consultar_vendedor.php
-ª       create.php
-ª       delete.php
-ª       delete_cliente.php
-ª       delete_vendedor.php
-ª       excluir.php
-ª       pdv.php
-ª       select.php
-ª       select_cliente.php
-ª       select_geral.php
-ª       select_vendas.php
-ª       select_vendedor.php
-ª       select_w.php
-ª       venda.php
-ª       
-+---css
-ª       style.css
-ª       
-+---database
-ª       connect.php
-ª       dump.sql
-ª       
-+---imagens
-ª       logo.png
-ª       
-+---includes
-ª       footer.php
-ª       functions.php
-ª       header.php
-ª       
-+---login
-        cadastra_user.php
-        login.php
-        logout.php
-        verifica_user.php
-=======
-## Estrutura do Projeto
+## 6. Estrutura do Projeto
 
 ```text
 .
@@ -393,7 +338,7 @@ C:.
     └── verifica_user.php
 >>>>>>> 4a06397942fd88e477c42e7f61be431f6da2e987
 ```     
-## Protótipo
+## 7. Protótipo
 
 Protótipo do site produzido:
 <img width="1510" height="716" alt="image" src="https://github.com/user-attachments/assets/cfdcba49-d1be-4c50-b1ab-4448037ddaae" />
