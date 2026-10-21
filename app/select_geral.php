@@ -29,12 +29,12 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <h2>Escolha o que você quer: </h2>
     
     <!-- Link para visualizar o relatório de produtos cadastrados -->
-    <a href="/stockhub/app/select.php">Produtos Cadastrados </a> <br>
+    <a href="select.php">Produtos Cadastrados </a> <br>
     <!-- Link para visualizar o relatório de vendedores cadastrados -->
-    <a href="/stockhub/app/select_vendedor.php">Vendedores cadastrados</a> <br>
+    <a href="select_vendedor.php">Vendedores cadastrados</a> <br>
     
     <!-- Link para visualizar o relatório de clientes cadastrados -->
-    <a href="/stockhub/app/select_cliente.php">Clientes cadastrados</a> <br>
+    <a href="select_cliente.php">Clientes cadastrados</a> <br>
     
     <!-- Inclui o rodapé padrão das páginas do sistema -->
     <?php include __DIR__ . '/../includes/footer.php'; ?>

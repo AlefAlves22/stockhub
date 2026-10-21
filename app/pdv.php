@@ -29,10 +29,10 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <h2>Escolha o que você quer: </h2>
     
     <!-- Link para navegar até a tela de criação/realização de vendas -->
-    <a href="/stockhub/app/venda.php"> Realizar venda</a> <br>
+    <a href="venda.php"> Realizar venda</a> <br>
     
     <!-- Link para navegar até o relatório/listagem de vendas já efetuadas -->
-    <a href="/stockhub/app/select_vendas.php"> Vendas realizadas</a> <br>
+    <a href="select_vendas.php"> Vendas realizadas</a> <br>
     
     <!-- Inclui o rodapé padrão das páginas do sistema -->
     <?php include __DIR__ . '/../includes/footer.php'; ?>

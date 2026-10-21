@@ -17,9 +17,9 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <?php include __DIR__ . '/../includes/header.php'; ?>
     <h1>Seja bem-vindo a página de CADASTROS: </h1>
     <h2>Escolha o que você quer: </h2>
-    <a href="/stockhub/app/create.php"> Cadastra Produto</a> <br>
-    <a href="/stockhub/app/cadastra_vendedor.php">Cadastrar Vendedor</a> <br>
-    <a href="/stockhub/app/cadastrar_cliente.php">Cadastrar Clientes</a> <br>
+    <a href="create.php"> Cadastra Produto</a> <br>
+    <a href="cadastra_vendedor.php">Cadastrar Vendedor</a> <br>
+    <a href="cadastrar_cliente.php">Cadastrar Clientes</a> <br>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>
 

@@ -17,9 +17,9 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <?php include __DIR__ . '/../includes/header.php'; ?>
     <h1>Seja bem-vindo a página de CONSULTAS: </h1>
     <h2>Escolha o que você quer: </h2>
-    <a href="/stockhub/app/select_W.php">Consultar Produtos</a> <br>
-    <a href="/stockhub/app/consultar_cliente.php">Consultar Clientes</a> <br>
-    <a href="/stockhub/app/consultar_vendedor.php">Consultar Vendedor</a> <br>
+    <a href="select_W.php">Consultar Produtos</a> <br>
+    <a href="consultar_cliente.php">Consultar Clientes</a> <br>
+    <a href="consultar_vendedor.php">Consultar Vendedor</a> <br>
     <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>
 

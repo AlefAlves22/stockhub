@@ -29,13 +29,13 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <h2>Escolha o que você quer: </h2>
     
     <!-- Link de navegação para a página de exclusão de produtos -->
-    <a href="stockhub/app/delete.php">Excluir Produto</a> <br>
+    <a href="delete.php">Excluir Produto</a> <br>
     
     <!-- Link de navegação para a página de exclusão de vendedores -->
-    <a href="stockhub/app/delete_vendedor.php">Excluir Vendedor</a> <br>
+    <a href="delete_vendedor.php">Excluir Vendedor</a> <br>
     
     <!-- Link de navegação para a página de exclusão de clientes -->
-    <a href="stockhub/app/delete_cliente.php">Excluir Cliente</a> <br>
+    <a href="delete_cliente.php">Excluir Cliente</a> <br>
     
     <!-- Inclui o rodapé padrão das páginas do sistema -->
     <?php include __DIR__ . '/../includes/footer.php'; ?>
