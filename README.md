@@ -280,3 +280,60 @@ graph LR
 |  | `nome_produto` | FK para identificar qual produto foi vendido | `varchar(255)` | `A-Z` | `NOT NULL` | 
 |  | `quantidade` | Quantidade do produto vendido | `number` | `0-9` | `NOT NULL` | 
 |  | `data_venda` | Data de quando foi realizada a venda | `datetime` | `0-9` | `NOT NULL` |
+
+## Estrutura das pastas
+C:.
+ª   docuentaþÒo.md
+ª   estrutura.txt
+ª   index.php
+ª   README.md
+ª   
++---app
+ª       atualizar.php
+ª       atualizar_cliente.php
+ª       atualizar_estoque.php
+ª       atualizar_produto.php
+ª       atualizar_vendedor.php
+ª       cadastrar.php
+ª       cadastrar_cliente.php
+ª       cadastra_vendedor.php
+ª       consultar.php
+ª       consultar_cliente.php
+ª       consultar_vendedor.php
+ª       create.php
+ª       delete.php
+ª       delete_cliente.php
+ª       delete_vendedor.php
+ª       excluir.php
+ª       pdv.php
+ª       select.php
+ª       select_cliente.php
+ª       select_geral.php
+ª       select_vendas.php
+ª       select_vendedor.php
+ª       select_w.php
+ª       venda.php
+ª       
++---css
+ª       style.css
+ª       
++---database
+ª       connect.php
+ª       dump.sql
+ª       
++---imagens
+ª       logo.png
+ª       
++---includes
+ª       footer.php
+ª       functions.php
+ª       header.php
+ª       
++---login
+        cadastra_user.php
+        login.php
+        logout.php
+        verifica_user.php
+        
+
+
