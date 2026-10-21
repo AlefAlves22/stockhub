@@ -3,68 +3,93 @@
 🎯 O objetivo do sistema é oferecer total visibilidade sobre o fluxo de mercadorias, permitindo um controlo preciso desde a entrada de produtos até ao acompanhamento de métricas de desempenho.
 
 ## Como Executar o Projeto Localmente
-Para rodar este projeto em sua máquina, será necessário ter instalado um ambiente de servidor local ( PHP ) e o banco de dados PostgreSQL .
+Para rodar este projeto na sua máquina, será necessário ter instalado um ambiente de servidor local (PHP) e o banco de dados PostgreSQL.
 
-Pré-requisitos
-PHP (v7.4 ou superior) habilitado com extensão pdo_pgsql.
-PostgreSQL instalado e rodar na porta 5432padrão).
-Git instalado na máquina.
-Passo 1: Clonar o Repositório
+### 2.1 Pré-Requisitos
+- PHP (v7.4 ou superior) habilitado com a extensão pdo_pgsql.
+- PostgreSQL instalado e em execução na porta padrão 5432.
+- Git instalado na máquina.
+- Navegador web atualizado.
+
+### 2.2 Passo 1: Clonar repositório
 Abra o terminal e execute:
+```bash
+# Clone este repositório
+git clone https://github.com/AlefAlves22/stockhub.git
 
-### Clone este repositório
-git clone https://github.com/AlefAlves22/stockhub_SENAI.git
-## Acesse a pasta do projeto
-cd geek-hub
-Passo 2: Configurar o Banco de Dados (Restaurar o Dump)
-O projeto já conta com um arquivo de dump.sql) com toda a estrutura das tabelas (possivelmente dados iniciais) localizada na pasta /db/. Siga os passos abaixo para recriar o banco no seu PostgreSQL:
+# Acesse a pasta do projeto
+cd stockhub
+```
 
-1 - Abra o terminalPrompt de Comando ou PowerShell).
+### 2.3 2.3 Passo 2: Configurar o Banco de Dados (Restore do Dump)
+O projeto conta com um arquivo de dump chamado petite_patisserie.sql, com a estrutura das tabelas e os dados armazenados no banco de dados. Siga os passos abaixo para restaurar o banco no PostgreSQL:
 
-2 - Conecte-se ao PostgreSQL usando seu usuário principal (geralmente postgres):
-
+1 - Abra o terminal, Prompt de Comando ou PowerShell.
+2 - Conecte-se ao PostgreSQL usando o usuário administrador postgres:
+```bash
 psql -U postgres
-3 - Se o banco de dados já existir de testes anteriores, apague-o e crie um novo para evitar conflitos de tabelas. Dentro do terminal interativo do psql, digite:
-DROP DATABASE IF EXISTS [stockhub];
-CREATE DATABASE [stockhub];
+```
+3 - Se o banco de dados já existir e for necessário recriá-lo, você pode apagá-lo e criar um novo para evitar conflitos. Dentro do terminal interativo do psql, digite:
+```bash
+DROP DATABASE IF EXISTS stockhub;
+CREATE DATABASE stockhub;
 \q
+```
+Atenção: a exclusão do banco apaga os dados existentes. Faça isso somente se não precisar preservá-los.
 
-4 - Navegue para a pasta dbdo projeto clonado e restaure o banco de dados executando o seguinte comando (Supondo que você esteja na raiz do projeto clonado):
-(Supondo que você esteja na raiz do projeto clonado)
+4 - Restaurar o banco de dados
+
+Navegue para a pasta onde está localizado o arquivo petite_patisserie.sql do projeto clonado e restaure o banco de dados executando os seguintes comandos.
+
+Se o arquivo estiver na raiz do projeto:
+```bash
+# Restaura o banco de dados
+psql -U postgres -d stockhub -f dump.sql
+
+```
+
+Se o arquivo estiver dentro de uma pasta chamada database, utilize:
+```bash
+# Acesse a pasta db
 cd db
 
-### Restaura o banco de dados
-psql -U postgres -d stockhub -f dump_shub.sql
+# Restaura o banco de dados
+psql -U postgres -d stockhub -f dump.sql
 
-### Volte para a raiz do projeto
+# Volte para a raiz do projeto
 cd ..
-Passo 3: Configurar a Conexão no PHP
-1 - Na raiz do projeto, abra o arquivo connect.php.
 
-2 - Altere as credenciais para representar em seu ambiente local PostgreSQL:
+```
 
+### 2.4 Passo 3: Configurar a Conexão no PHP
+1 - Na pasta database, abra o arquivo connect.php.
+
+2 - Altere as credenciais para corresponderem às do seu ambiente local PostgreSQL:
+``` bash
 $host = 'localhost';
 $port = '5432';
-$dbname = '[nome_bd]'; // O mesmo nome que criou no Passo 2
-$user = 'postgres'; // O seu usuário do PostgreSQL
-$password = 'sua_senha_aqui'; // A sua senha do PostgreSQL
-Passo 4: Acesse a Aplicação
-Com o banco de dados configurado, inicie o servidor embutido do PHP. -se de que seu terminal certifique-se de que está na raiz do projeto e execute:
+$dbname = 'stockhub';
+$user = 'estoquista';
+$password = 'estoque'; 
+```
+**Observação:** o usuário petitepatisserie deve existir no PostgreSQL e possuir as permissões necessárias para acessar o banco de dados. Não compartilhe sua senha pessoal no GitHub.
 
-php -S 0.0.0.0:3007
-O servidor estará ativo! Agora, basta abrir seu navegador de preferência e acessar:
-
-http://localhost:3007
-Passo 5: Informações de entrada
-Utilize essas informações para entrar no sistema.
-
-E-mail : davi@geekhub.com Senha :1234
-
-Especificação de Requisitos de Software
-Especificação dos Requisitos de Software (SRE)
-Estrutura Baseada na ISO/IEC/IEEE 29148:2018
+### 2.5 Passo 4: Acessar a Aplicação
+Com o banco de dados configurado, inicie o servidor embutido do PHP. Certifique-se de que o terminal está na pasta correta e execute:
+```bash
+php -S localhost:8000
+```
+Se o terminal estiver na pasta principal do projeto, acesse:
+```bash
+http://localhost:8000/
+```
+Caso o projeto esteja dentro de uma pasta chamada stockhub, iniciando o servidor na pasta anterior a ela, o endereço será:
+```bash
+http://localhost:8000/stockhub/
+```
 
 ## 1. Funções do projeto
+
 
 - <strong>Cadastrar produtos (CREATE):  </strong> Para começar, o usuário deverá cadastrar um produto para que ele apareça na lista de estoque. No cadastro, será possível informar dados como:
     - Nome do produto
