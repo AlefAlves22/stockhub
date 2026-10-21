@@ -281,6 +281,7 @@ graph LR
 |  | `quantidade` | Quantidade do produto vendido | `number` | `0-9` | `NOT NULL` | 
 |  | `data_venda` | Data de quando foi realizada a venda | `datetime` | `0-9` | `NOT NULL` |
 
+<<<<<<< HEAD
 ## Estrutura das pastas
 C:.
 ª   docuentaþÒo.md
@@ -334,6 +335,63 @@ C:.
         login.php
         logout.php
         verifica_user.php
+=======
+## Estrutura do Projeto
+
+```text
+.
+├── docuentaçao.md
+├── estrutura.txt
+├── index.php
+├── README.md
+│
+├── app/
+│   ├── atualizar.php
+│   ├── atualizar_cliente.php
+│   ├── atualizar_estoque.php
+│   ├── atualizar_produto.php
+│   ├── atualizar_vendedor.php
+│   ├── cadastrar.php
+│   ├── cadastrar_cliente.php
+│   ├── cadastra_vendedor.php
+│   ├── consultar.php
+│   ├── consultar_cliente.php
+│   ├── consultar_vendedor.php
+│   ├── create.php
+│   ├── delete.php
+│   ├── delete_cliente.php
+│   ├── delete_vendedor.php
+│   ├── excluir.php
+│   ├── pdv.php
+│   ├── select.php
+│   ├── select_cliente.php
+│   ├── select_geral.php
+│   ├── select_vendas.php
+│   ├── select_vendedor.php
+│   ├── select_w.php
+│   └── venda.php
+│
+├── css/
+│   └── style.css
+│
+├── database/
+│   ├── connect.php
+│   └── dump.sql
+│
+├── imagens/
+│   └── logo.png
+│
+├── includes/
+│   ├── footer.php
+│   ├── functions.php
+│   └── header.php
+│
+└── login/
+    ├── cadastra_user.php
+    ├── login.php
+    ├── logout.php
+    └── verifica_user.php
+>>>>>>> 4a06397942fd88e477c42e7f61be431f6da2e987
         
 
 
