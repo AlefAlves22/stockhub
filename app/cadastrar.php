@@ -19,7 +19,7 @@ require_once __DIR__ . '/../login/verifica_user.php';
     <a href="/projeto_integrador/app/create.php"> Cadastra Produto</a> <br>
     <a href="/projeto_integrador/app/cadastra_vendedor.php">Cadastrar Vendedor</a> <br>
     <a href="/projeto_integrador/app/cadastrar_cliente.php">Cadastrar Clientes</a> <br>
-
+    <?php include __DIR__ . '/../includes/footer.php'; ?>
 </body>
 
 </html>

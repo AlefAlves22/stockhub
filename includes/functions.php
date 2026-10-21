@@ -1,6 +1,17 @@
 <?php
+// Inclui o arquivo responsável por estabelecer a conexão com o banco de dados usando PDO
 require_once '../database/connect.php';
 
+/**
+ * Insere um novo usuário de sistema na tabela 'login'.
+ *
+ * @param PDO    $conexao Instância da conexão ativa com o banco de dados.
+ * @param string $email   Endereço de e-mail do usuário.
+ * @param string $senha   Senha de acesso do usuário.
+ * @param string $nome    Nome completo do usuário.
+ * @param string $cpf     Número do CPF do usuário.
+ * @return void
+ */
 function cadastrar_user($conexao, $email, $senha, $nome, $cpf)
 {
     $sql = "INSERT INTO login(email, senha, nome, cpf) VALUES (:email, :senha, :nome, :cpf)";
@@ -18,6 +29,14 @@ function cadastrar_user($conexao, $email, $senha, $nome, $cpf)
     }
 }
 
+/**
+ * Realiza a consulta de credenciais para autenticação na tela de login.
+ *
+ * @param PDO    $conexao Instância da conexão ativa com o banco de dados.
+ * @param string $email   E-mail informado no formulário de login.
+ * @param string $senha   Senha informada no formulário de login.
+ * @return array|false Retorna os dados do usuário em array associativo ou false em caso de insucesso.
+ */
 function consulta_user($conexao, $email, $senha)
 {
     $sql = "SELECT id, email, senha FROM login WHERE email = :email AND senha = :senha";
@@ -28,12 +47,26 @@ function consulta_user($conexao, $email, $senha)
         $stmt->bindParam(":senha", $senha);
         $stmt->execute();
 
+        // Retorna a linha encontrada em formato de array associativo
         return $stmt->fetch(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Erro: " . $e->getMessage();
     }
 }
 
+/**
+ * Cadastra um novo produto na tabela 'produtos'.
+ * Trata exceções de violação de chave única (código 23505 para duplicidade de SKU/EAN no PostgreSQL).
+ *
+ * @param PDO    $conexao      Instância da conexão com o banco de dados.
+ * @param string $sku          Código único SKU do produto.
+ * @param string $nome_produto Nome do produto.
+ * @param float  $valor_final  Valor de venda do produto.
+ * @param float  $valor_entrada Valor de custo/compra do produto.
+ * @param string $descricao    Descrição detalhada do produto.
+ * @param string $codigo_barra Código de barras (EAN).
+ * @return bool Retorna true se cadastrado com sucesso ou false em caso de erro.
+ */
 function cadastrar_produto($conexao, $sku, $nome_produto, $valor_final, $valor_entrada, $descricao, $codigo_barra)
 {
     $sql = "INSERT INTO produtos (sku, nome_produto, valor_final, valor_entrada, descricao, codigo_barra) 
@@ -51,6 +84,7 @@ function cadastrar_produto($conexao, $sku, $nome_produto, $valor_final, $valor_e
         echo "Produto cadastrado com sucesso!<br>";
         return true;
     } catch (PDOException $e) {
+        // Trata erro de violação de unicidade (SKU ou Código de barras duplicado)
         if ($e->getCode() == '23505') {
             echo "Erro: O SKU ou Código de barras já está cadastrado em outro produto.<br>";
         } else {
@@ -60,6 +94,16 @@ function cadastrar_produto($conexao, $sku, $nome_produto, $valor_final, $valor_e
     }
 }
 
+/**
+ * Registra a quantidade inicial de estoque e fornecedor vinculados ao SKU/EAN do produto.
+ *
+ * @param PDO    $conexao            Instância da conexão com o banco de dados.
+ * @param int    $quantidade_estoque Quantidade física inicial em estoque.
+ * @param string $fornecedor         Nome do fornecedor do produto.
+ * @param string $sku                SKU correspondente ao produto cadastrado.
+ * @param string $codigo_barra       Código de barras (EAN) correspondente.
+ * @return void
+ */
 function estoque_produto($conexao, $quantidade_estoque, $fornecedor, $sku, $codigo_barra)
 {
     $sql = "INSERT INTO estoque (quantidade_estoque, fornecedor, sku, codigo_barra) 
@@ -80,6 +124,13 @@ function estoque_produto($conexao, $quantidade_estoque, $fornecedor, $sku, $codi
     }
 }
 
+/**
+ * Exclui um registro de produto da tabela 'produtos' com base no seu SKU.
+ *
+ * @param PDO    $conexao Instância da conexão com o banco de dados.
+ * @param string $sku     Código SKU do produto a ser removido.
+ * @return void
+ */
 function apagar($conexao, $sku)
 {
     $sql = "DELETE FROM produtos WHERE sku = :sku";
@@ -93,9 +144,15 @@ function apagar($conexao, $sku)
     }
 }
 
+/**
+ * Gera um relatório completo cruzando os dados das tabelas 'produtos' e 'estoque' via INNER JOIN.
+ *
+ * @param PDO $conexao Instância da conexão com o banco de dados.
+ * @return void
+ */
 function relatorio($conexao)
 {
-    $sql = "SELECT p.id,p.sku, p.nome_produto, p.valor_final, p.valor_entrada, p.descricao, e.codigo_barra, e.quantidade_estoque, e.fornecedor 
+    $sql = "SELECT p.id, p.sku, p.nome_produto, p.valor_final, p.valor_entrada, p.descricao, e.codigo_barra, e.quantidade_estoque, e.fornecedor 
             FROM produtos AS p 
             INNER JOIN estoque AS e ON p.sku = e.sku";
     try {
@@ -104,6 +161,7 @@ function relatorio($conexao)
 
         $estoque = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        // Percorre e exibe cada item retornado da consulta
         foreach ($estoque as $item) {
             echo "ID: {$item['id']}<br>";
             echo "SKU: {$item['sku']}<br>";
@@ -121,9 +179,15 @@ function relatorio($conexao)
     }
 }
 
+/**
+ * Consulta e exibe as informações detalhadas de um produto específico buscando pelo Código de Barras.
+ *
+ * @param PDO    $conexao      Instância da conexão com o banco de dados.
+ * @param string $codigo_barra Código de barras (EAN) pesquisado.
+ * @return void
+ */
 function consultar($conexao, $codigo_barra)
 {
-    // Removido o ponto final após 'estoque.codigo_barra'
     $sql = "SELECT * FROM produtos 
             INNER JOIN estoque ON produtos.codigo_barra = estoque.codigo_barra 
             WHERE produtos.codigo_barra = :codigo_barra";
@@ -144,8 +208,7 @@ function consultar($conexao, $codigo_barra)
             echo "Descrição: " . $produtos['descricao'] . "<br>";
             echo "Código de barras: " . $produtos['codigo_barra'] . "<br>";
             echo "Estoque: " . $produtos['quantidade_estoque'] . "<br>";
-            echo "Fornecedor: " . $produtos['fornecedor'] . "<br>";
-            echo "Código de barras: " . $produtos['codigo_barra'] . "<br><br>";
+            echo "Fornecedor: " . $produtos['fornecedor'] . "<br><br>";
         } else {
             echo "Nenhum produto encontrado com o Código de barras: " . htmlspecialchars((string) $codigo_barra) . "<br><br>";
         }
@@ -154,9 +217,21 @@ function consultar($conexao, $codigo_barra)
     }
 }
 
+/**
+ * Atualiza os campos cadastrais do produto na tabela 'produtos' identificando-o pelo ID.
+ *
+ * @param PDO    $conexao      Instância da conexão com o banco de dados.
+ * @param int    $id           ID primário do produto.
+ * @param string $sku          Novo ou atual SKU.
+ * @param string $nome_produto Novo ou atual nome.
+ * @param float  $valor_final  Novo ou atual valor de venda.
+ * @param float  $valor_entrada Novo ou atual valor de compra.
+ * @param string $descricao    Nova ou atual descrição.
+ * @param string $codigo_barra Novo ou atual código de barras.
+ * @return void
+ */
 function atualizar_produto($conexao, $id, $sku, $nome_produto, $valor_final, $valor_entrada, $descricao, $codigo_barra)
 {
-    // O 'id' fica APENAS no WHERE, garantindo que a Chave Primária nunca seja alterada
     $sql = "UPDATE produtos SET 
                 sku = :sku, 
                 nome_produto = :nome_produto, 
@@ -169,7 +244,6 @@ function atualizar_produto($conexao, $id, $sku, $nome_produto, $valor_final, $va
     try {
         $stmt = $conexao->prepare($sql);
 
-        // Passa o ID apenas para identificar o registo correto no banco
         $stmt->bindValue(":id", $id);
         $stmt->bindValue(":sku", $sku);
         $stmt->bindValue(":nome_produto", $nome_produto);
@@ -184,6 +258,16 @@ function atualizar_produto($conexao, $id, $sku, $nome_produto, $valor_final, $va
         echo "Erro: " . $e->getMessage();
     }
 }
+
+/**
+ * Atualiza os dados de quantidade e fornecedor na tabela 'estoque' pelo código de barras.
+ *
+ * @param PDO    $conexao            Instância da conexão com o banco de dados.
+ * @param int    $quantidade_estoque Nova quantidade em estoque.
+ * @param string $fornecedor         Nome do fornecedor.
+ * @param string $codigo_barra       Código de barras (EAN) do produto.
+ * @return void
+ */
 function atualizar_estoque($conexao, $quantidade_estoque, $fornecedor, $codigo_barra)
 {
     $sql = "UPDATE estoque SET 
@@ -198,15 +282,22 @@ function atualizar_estoque($conexao, $quantidade_estoque, $fornecedor, $codigo_b
         $stmt->bindValue(":fornecedor", $fornecedor);
         $stmt->bindValue(":codigo_barra", $codigo_barra);
 
-        // Executado apenas UMA vez
         $stmt->execute();
 
-        echo "Produto atualizado com sucesso!";
+        echo "Estoque atualizado com sucesso!";
     } catch (PDOException $e) {
         echo "Erro: " . $e->getMessage();
     }
 }
 
+/**
+ * Insere um novo registro de vendedor na tabela 'vendedor'.
+ *
+ * @param PDO    $conexao       Instância da conexão com o banco de dados.
+ * @param string $nome_vendedor Nome completo do vendedor.
+ * @param string $cpf           CPF do vendedor.
+ * @return void
+ */
 function cadastrar_vendedor($conexao, $nome_vendedor, $cpf)
 {
     $sql = "INSERT INTO vendedor(nome_vendedor, cpf) VALUES (:nome_vendedor, :cpf)";
@@ -222,6 +313,12 @@ function cadastrar_vendedor($conexao, $nome_vendedor, $cpf)
     }
 }
 
+/**
+ * Consulta e exibe a lista de todos os vendedores cadastrados no sistema.
+ *
+ * @param PDO $conexao Instância da conexão com o banco de dados.
+ * @return void
+ */
 function relatorio_vendedor($conexao)
 {
     $sql = "SELECT * FROM vendedor";
@@ -229,12 +326,12 @@ function relatorio_vendedor($conexao)
         $stmt = $conexao->prepare($sql);
         $stmt->execute();
 
-        $vendedor = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $vendedores = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($vendedor as $vendedor) {
-            echo "ID: {$vendedor['id']} <br>";
-            echo "Nome: {$vendedor['nome_vendedor']}<br>";
-            echo "CPF: {$vendedor['cpf']}<br>";
+        foreach ($vendedores as $v) {
+            echo "ID: {$v['id']} <br>";
+            echo "Nome: {$v['nome_vendedor']}<br>";
+            echo "CPF: {$v['cpf']}<br>";
             echo "<hr>";
         }
     } catch (PDOException $e) {
@@ -242,6 +339,16 @@ function relatorio_vendedor($conexao)
     }
 }
 
+/**
+ * Insere um novo registro de cliente na tabela 'cliente'.
+ *
+ * @param PDO    $conexao      Instância da conexão com o banco de dados.
+ * @param string $nome_cliente Nome completo do cliente.
+ * @param string $cpf          CPF do cliente.
+ * @param string $telefone     Número de telefone/contato.
+ * @param string $endereco     Endereço do cliente.
+ * @return void
+ */
 function cadastrar_cliente($conexao, $nome_cliente, $cpf, $telefone, $endereco)
 {
     $sql = "INSERT INTO cliente(nome_cliente, cpf, telefone, endereco) VALUES (:nome_cliente, :cpf, :telefone, :endereco)";
@@ -259,7 +366,12 @@ function cadastrar_cliente($conexao, $nome_cliente, $cpf, $telefone, $endereco)
     }
 }
 
-
+/**
+ * Consulta e exibe a listagem completa de todos os clientes cadastrados.
+ *
+ * @param PDO $conexao Instância da conexão com o banco de dados.
+ * @return void
+ */
 function relatorio_cliente($conexao)
 {
     $sql = "SELECT * FROM cliente";
@@ -267,14 +379,14 @@ function relatorio_cliente($conexao)
         $stmt = $conexao->prepare($sql);
         $stmt->execute();
 
-        $cliente = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($cliente as $cliente) {
-            echo "ID: {$cliente['id']}<br>";
-            echo "Nome: {$cliente['nome_cliente']}<br>";
-            echo "CPF: {$cliente['cpf']}<br>";
-            echo "Telefone: {$cliente['telefone']}<br>";
-            echo "Endereço: {$cliente['endereco']}<br>";
+        foreach ($clientes as $c) {
+            echo "ID: {$c['id']}<br>";
+            echo "Nome: {$c['nome_cliente']}<br>";
+            echo "CPF: {$c['cpf']}<br>";
+            echo "Telefone: {$c['telefone']}<br>";
+            echo "Endereço: {$c['endereco']}<br>";
             echo "<hr>";
         }
     } catch (PDOException $e) {
@@ -282,6 +394,12 @@ function relatorio_cliente($conexao)
     }
 }
 
+/**
+ * Busca e retorna a lista de nomes dos clientes ordenados alfabeticamente para preencher o <datalist>.
+ *
+ * @param PDO $conexao Instância da conexão com o banco de dados.
+ * @return array Array de arrays associativos com os nomes dos clientes.
+ */
 function vendas_cliente($conexao)
 {
     $sql = "SELECT nome_cliente FROM cliente ORDER BY nome_cliente ASC";
@@ -289,7 +407,6 @@ function vendas_cliente($conexao)
         $stmt = $conexao->prepare($sql);
         $stmt->execute();
 
-        // Retorna todos os clientes cadastrados em forma de array
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Erro ao buscar Clientes: " . $e->getMessage();
@@ -297,7 +414,12 @@ function vendas_cliente($conexao)
     }
 }
 
-
+/**
+ * Busca e retorna a lista de nomes dos vendedores ordenados alfabeticamente para preencher o <datalist>.
+ *
+ * @param PDO $conexao Instância da conexão com o banco de dados.
+ * @return array Array de arrays associativos com os nomes dos vendedores.
+ */
 function vendas_vendedor($conexao)
 {
     $sql = "SELECT nome_vendedor FROM vendedor ORDER BY nome_vendedor ASC";
@@ -305,7 +427,6 @@ function vendas_vendedor($conexao)
         $stmt = $conexao->prepare($sql);
         $stmt->execute();
 
-        // Retorna todos os clientes cadastrados em forma de array
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Erro ao buscar Vendedor: " . $e->getMessage();
@@ -313,6 +434,12 @@ function vendas_vendedor($conexao)
     }
 }
 
+/**
+ * Busca e retorna a lista de nomes dos produtos ordenados alfabeticamente para preencher o <datalist>.
+ *
+ * @param PDO $conexao Instância da conexão com o banco de dados.
+ * @return array Array de arrays associativos com os nomes dos produtos.
+ */
 function vendas_produto($conexao)
 {
     $sql = "SELECT nome_produto FROM produtos ORDER BY nome_produto ASC";
@@ -320,7 +447,6 @@ function vendas_produto($conexao)
         $stmt = $conexao->prepare($sql);
         $stmt->execute();
 
-        // Retorna todos os clientes cadastrados em forma de array
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     } catch (PDOException $e) {
         echo "Erro ao buscar Produto: " . $e->getMessage();
@@ -328,20 +454,28 @@ function vendas_produto($conexao)
     }
 }
 
+/**
+ * Localiza o SKU correspondente ao nome do produto e subtrai a quantidade especificada no estoque.
+ *
+ * @param PDO    $conexao      Instância da conexão com o banco de dados.
+ * @param string $nome_produto Nome do produto vendido.
+ * @param int    $quantidade   Quantidade de unidades a abater do estoque.
+ * @throws Exception Em caso de falha na atualização PDO.
+ * @return bool Retorna true se atualizado com sucesso ou false se o produto não for localizado.
+ */
 function vendas_estoque($conexao, $nome_produto, $quantidade)
 {
     try {
-        // Busca o sku na tabela estoque pelo nome digitado
+        // Busca o SKU na tabela de produtos pelo nome (tratando case-insensitive e espaços)
         $sqlBusca = "SELECT sku FROM produtos WHERE LOWER(TRIM(nome_produto)) = LOWER(TRIM(:nome_produto))";
         $stmtBusca = $conexao->prepare($sqlBusca);
         $stmtBusca->execute([':nome_produto' => $nome_produto]);
         $produto = $stmtBusca->fetch(PDO::FETCH_ASSOC);
 
-        // Se encontrou o SKU correspondente no cadastro de produtos
         if ($produto && !empty($produto['sku'])) {
             $sku = $produto['sku'];
 
-            // 2. Abate a quantidade na tabela 'estoque' usando a coluna 'sku'
+            // Abate a quantidade vendida da coluna quantidade_estoque
             $sqlEstoque = "UPDATE estoque 
                            SET quantidade_estoque = quantidade_estoque - :quantidade 
                            WHERE LOWER(TRIM(sku)) = LOWER(TRIM(:sku))";
@@ -359,7 +493,13 @@ function vendas_estoque($conexao, $nome_produto, $quantidade)
     }
 }
 
-// Função que busca a quantidade em estoque digitando o nome do produto
+/**
+ * Consulta e devolve a quantidade exata disponível no estoque pesquisando pelo nome do produto.
+ *
+ * @param PDO    $conexao      Instância da conexão com o banco de dados.
+ * @param string $nome_produto Nome do produto consultado.
+ * @return int Retorna o número de unidades no estoque ou 0 caso não seja encontrado.
+ */
 function buscar_quantidade_estoque($conexao, $nome_produto)
 {
     try {
@@ -370,12 +510,10 @@ function buscar_quantidade_estoque($conexao, $nome_produto)
         $stmt = $conexao->prepare($sql);
         $stmt->execute([':nome_produto' => $nome_produto]);
 
-        // Pega o resultado do banco
         $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // Se achou o produto, devolve a quantidade. Se não achou, devolve 0
         if ($resultado) {
-            return $resultado['quantidade_estoque'];
+            return (int) $resultado['quantidade_estoque'];
         } else {
             return 0;
         }
@@ -384,10 +522,19 @@ function buscar_quantidade_estoque($conexao, $nome_produto)
     }
 }
 
+/**
+ * Registra a transação de venda na tabela 'vendas'.
+ *
+ * @param PDO    $conexao       Instância da conexão com o banco de dados.
+ * @param string $nome_cliente  Nome do cliente da venda.
+ * @param string $nome_vendedor Nome do vendedor responsável.
+ * @param string $nome_produtos Nome do produto comercializado.
+ * @param int    $quantidade    Quantidade vendida.
+ * @return bool Retorna true em caso de sucesso na execução.
+ */
 function registrar_venda($conexao, $nome_cliente, $nome_vendedor, $nome_produtos, $quantidade)
 {
     try {
-        // Registra a venda na tabela vendas
         $sql = "INSERT INTO vendas (nome_cliente, nome_vendedor, nome_produtos, quantidade) 
                 VALUES (:nome_cliente, :nome_vendedor, :nome_produtos, :quantidade)";
 
@@ -399,58 +546,78 @@ function registrar_venda($conexao, $nome_cliente, $nome_vendedor, $nome_produtos
             ':quantidade'    => $quantidade
         ]);
     } catch (PDOException $e) {
-        // Mostra a mensagem de erro exata vinda do banco de dados para diagnosticar
         die("Erro do Banco de Dados: " . $e->getMessage());
     }
 }
 
+/**
+ * Atualiza o nome e o CPF de um vendedor cadastrado filtrando pelo ID.
+ *
+ * @param PDO    $conexao       Instância da conexão com o banco de dados.
+ * @param int    $id            ID primário do vendedor.
+ * @param string $nome_vendedor Novo ou atual nome do vendedor.
+ * @param string $cpf           Novo ou atual CPF.
+ * @return void
+ */
 function atualizar_vendedor($conexao, $id, $nome_vendedor, $cpf)
 {
-    // O 'id' fica APENAS no WHERE, garantindo que a Chave Primária nunca seja alterada
     $sql = "UPDATE vendedor SET nome_vendedor = :nome_vendedor, cpf = :cpf
             WHERE id = :id";
 
     try {
         $stmt = $conexao->prepare($sql);
 
-        // Passa o ID apenas para identificar o registo correto no banco
         $stmt->bindValue(":id", $id);
         $stmt->bindValue(":nome_vendedor", $nome_vendedor);
         $stmt->bindValue(":cpf", $cpf);
         $stmt->execute();
-        echo "Produto atualizado com sucesso!";
+        echo "Vendedor atualizado com sucesso!";
     } catch (PDOException $e) {
         echo "Erro: " . $e->getMessage();
     }
 }
 
+/**
+ * Atualiza os dados cadastrais de um cliente filtrando pelo ID.
+ *
+ * @param PDO    $conexao      Instância da conexão com o banco de dados.
+ * @param int    $id           ID primário do cliente.
+ * @param string $nome_cliente Novo ou atual nome.
+ * @param string $cpf          Novo ou atual CPF.
+ * @param string $telefone     Novo ou atual telefone.
+ * @param string $endereco     Novo ou atual endereço.
+ * @return void
+ */
 function atualizar_cliente($conexao, $id, $nome_cliente, $cpf, $telefone, $endereco)
 {
-    // O 'id' fica APENAS no WHERE, garantindo que a Chave Primária nunca seja alterada
     $sql = "UPDATE cliente SET nome_cliente = :nome_cliente, cpf = :cpf, telefone = :telefone, endereco = :endereco
-    WHERE id = :id";
+            WHERE id = :id";
 
     try {
         $stmt = $conexao->prepare($sql);
 
-        // Passa o ID apenas para identificar o registo correto no banco
         $stmt->bindValue(":id", $id);
         $stmt->bindValue(":nome_cliente", $nome_cliente);
         $stmt->bindValue(":cpf", $cpf);
         $stmt->bindValue(":telefone", $telefone);
         $stmt->bindValue(":endereco", $endereco);
         $stmt->execute();
-        echo "Produto atualizado com sucesso!";
+        echo "Cliente atualizado com sucesso!";
     } catch (PDOException $e) {
         echo "Erro: " . $e->getMessage();
     }
 }
 
+/**
+ * Busca e exibe os dados cadastrais de um cliente especificando seu CPF.
+ *
+ * @param PDO    $conexao Instância da conexão com o banco de dados.
+ * @param string $cpf     Número de CPF a consultar.
+ * @return void
+ */
 function consultar_cliente($conexao, $cpf)
 {
-    // Removido o ponto final após 'estoque.codigo_barra'
-    $sql = "SELECT * FROM cliente 
-            WHERE cpf = :cpf";
+    $sql = "SELECT * FROM cliente WHERE cpf = :cpf";
 
     try {
         $stmt = $conexao->prepare($sql);
@@ -466,18 +633,23 @@ function consultar_cliente($conexao, $cpf)
             echo "Telefone: " . $cliente['telefone'] . "<br>";
             echo "Endereço: " . $cliente['endereco'] . "<br>";
         } else {
-            echo "Nenhum produto encontrado com o Código de barras: " . htmlspecialchars((string) $cpf) . "<br><br>";
+            echo "Nenhum cliente encontrado com o CPF: " . htmlspecialchars((string) $cpf) . "<br><br>";
         }
     } catch (PDOException $e) {
         echo "Erro na consulta: " . $e->getMessage();
     }
 }
 
+/**
+ * Busca e exibe os dados cadastrais de um vendedor especificando seu CPF.
+ *
+ * @param PDO    $conexao Instância da conexão com o banco de dados.
+ * @param string $cpf     Número de CPF a consultar.
+ * @return void
+ */
 function consultar_vendedor($conexao, $cpf)
 {
-    // Removido o ponto final após 'estoque.codigo_barra'
-    $sql = "SELECT * FROM vendedor
-            WHERE cpf = :cpf";
+    $sql = "SELECT * FROM vendedor WHERE cpf = :cpf";
 
     try {
         $stmt = $conexao->prepare($sql);
@@ -490,7 +662,6 @@ function consultar_vendedor($conexao, $cpf)
             echo "ID : " . $vendedor['id'] . "<br>";
             echo "Nome: " . $vendedor['nome_vendedor'] . "<br>";
             echo "CPF: " . $vendedor['cpf'] . "<br>";
-
         } else {
             echo "Nenhum vendedor encontrado com o CPF: " . htmlspecialchars((string) $cpf) . "<br><br>";
         }
@@ -499,6 +670,13 @@ function consultar_vendedor($conexao, $cpf)
     }
 }
 
+/**
+ * Deleta um registro de vendedor da tabela 'vendedor' filtrando pelo CPF.
+ *
+ * @param PDO    $conexao Instância da conexão com o banco de dados.
+ * @param string $cpf     CPF do vendedor a ser apagado.
+ * @return void
+ */
 function apagar_vendedor($conexao, $cpf)
 {
     $sql = "DELETE FROM vendedor WHERE cpf = :cpf";
@@ -512,6 +690,13 @@ function apagar_vendedor($conexao, $cpf)
     }
 }
 
+/**
+ * Deleta um registro de cliente da tabela 'cliente' filtrando pelo CPF.
+ *
+ * @param PDO    $conexao Instância da conexão com o banco de dados.
+ * @param string $cpf     CPF do cliente a ser apagado.
+ * @return void
+ */
 function apagar_cliente($conexao, $cpf)
 {
     $sql = "DELETE FROM cliente WHERE cpf = :cpf";
@@ -525,6 +710,12 @@ function apagar_cliente($conexao, $cpf)
     }
 }
 
+/**
+ * Consulta e lista o histórico de todas as vendas cadastradas na tabela 'vendas'.
+ *
+ * @param PDO $conexao Instância da conexão com o banco de dados.
+ * @return void
+ */
 function relatorio_vendas($conexao)
 {
     $sql = "SELECT * FROM vendas";
@@ -534,13 +725,13 @@ function relatorio_vendas($conexao)
 
         $vendas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        foreach ($vendas as $vendas) {
-            echo "ID: {$vendas['id']}<br>";
-            echo "Cliente: {$vendas['nome_cliente']}<br>";
-            echo "Vendedor: {$vendas['nome_vendedor']}<br>";
-            echo "Produto: {$vendas['nome_produtos']}<br>";
-            echo "Quantidade: {$vendas['quantidade']}<br>";
-            echo "Data: {$vendas['data_venda']}<br>";
+        foreach ($vendas as $v) {
+            echo "ID: {$v['id']}<br>";
+            echo "Cliente: {$v['nome_cliente']}<br>";
+            echo "Vendedor: {$v['nome_vendedor']}<br>";
+            echo "Produto: {$v['nome_produtos']}<br>";
+            echo "Quantidade: {$v['quantidade']}<br>";
+            echo "Data: {$v['data_venda']}<br>";
             echo "<hr>";
         }
     } catch (PDOException $e) {

@@ -159,3 +159,39 @@ graph LR
         UC7 -. " <<include>> " .-> UC9
     end
 ```
+
+## Dicionário de Dados
+| NOME DA TABELA | NOME DO CAMPO | DESCRIÇÃO DO CAMPO | TIPO DE DADO | MÁSCARA | OPÇÕES DE COLUNA | 
+| ----- | ----- | ----- | ----- | ----- | ----- | 
+| **produtos** | `id_produtos` | PK para identificar o produto | `int` | `0-9` | `NOT NULL` | 
+|  | `sku` | Identificar o sku do produto fornecido pelo fornecedor | `varchar(50)` | `A-Z` | `NOT NULL` | 
+|  | `nome_produto` | Nome para identificar o produto | `varchar(200)` | `A-Z` | `NOT NULL` | 
+|  | `descricao` | Descrição do produto | `varchar(255)` | `A-Z` | `NOT NULL` | 
+|  | `codigo_barra` | Código de barras do produto | `varchar(13)` | `0-9` | `NOT NULL` | 
+|  | `valor_entrada` | Valor de quanto comprou o produto | `decimal(10,2)` | `A-Z` | `NOT NULL` | 
+|  | `valor_final` | Valor de quanto vai ser vendido o produto | `decimal(10,2)` | `A-Z` | `NOT NULL` | 
+|  | `id_estoque` | FK para identificar o estoque do produto | `int` | `0-9` | `NOT NULL` | 
+| **estoque** | `id_estoque` | PK para identificar o produto em estoque | `int` | `0-9` | `NOT NULL` | 
+|  | `sku` | SKU para identificar o produto | `varchar(13)` | `0-9` | `NOT NULL` | 
+|  | `codigo_barra` | Código de barras do produto para estoque | `varchar(50)` | `A-Z` | `NOT NULL` | 
+|  | `quantidade_estoque` | Quantidade de produto que tem em estoque | `int` | `0-9` | `NOT NULL` | 
+|  | `fornecedor` | Nome do fornecedor do produto | `varchar(255)` | `A-Z` | `NOT NULL` | 
+| **login** | `id_login` | PK para identificar o id de login | `int` | `0-9` | `NOT NULL` | 
+|  | `nome` | Nome do funcionário | `vachar(200)` | `A-Z` | `NOT NULL` | 
+|  | `email` | E-mail do funcionário | `varchar(255)` | `A-Z` | `NOT NULL` | 
+|  | `cpf` | CPF do funcionário | `varchar(14)` | `0-9` | `NOT NULL` | 
+|  | `senha` | Senha de login do funcionário | `varchar(255)` | `A-Z` | `NOT NULL` | 
+| **cliente** | `id_cliente` | PK para identificar o id do cliente | `int` | `0-9` | `NOT NULL` | 
+|  | `nome_cliente` | Nome do cliente | `varchar(255)` | `A-Z` | `NOT NULL` | 
+|  | `cpf` | CPF do cliente | `varcha(14)` | `0-9` | `NOT NULL` | 
+|  | `telefone` | Telefone do cliente | `varchar(20)` | `0-9` | `NOT NULL` | 
+|  | `endereco` | Endereço do cliente | `varchar(255)` | `A-Z` | `NOT NULL` | 
+| **vendedor** | `id_vendedor` | PK para identificar o id do vendedor | `int` | `0-9` | `NOT NULL` | 
+|  | `nome_vendedor` | Nome do vendedor | `varchar(255)` | `A-Z` | `NOT NULL` | 
+|  | `cpf` | CPF do vendedor | `varchar(14)` | `0-9` | `NOT NULL` | 
+| **vendas** | `id_venda` | PK para identificar o id das vendas | `int` | `0-9` | `NOT NULL` | 
+|  | `nome_cliente` | FK para identificar qual o cliente fez a compra | `varchar(255)` | `A-Z` | `NOT NULL` | 
+|  | `nome_vendedor` | FK para identificar o vendedor | `varchar(255)` | `A-Z` | `NOT NULL` | 
+|  | `nome_produto` | FK para identificar qual produto foi vendido | `varchar(255)` | `A-Z` | `NOT NULL` | 
+|  | `quantidade` | Quantidade do produto vendido | `number` | `0-9` | `NOT NULL` | 
+|  | `data_venda` | Data de quando foi realizada a venda | `datetime` | `0-9` | `NOT NULL` |
