@@ -209,7 +209,6 @@ erDiagram
     }   
     
     produtos ||--o{ vendas : "geram"
-    login ||--o{ produtos : "cadastra"
     estoque ||--|| produtos : "pertence a"
     vendedor ||--o{ vendas : "realiza"
     cliente ||--o{ vendas : "comtem em"
