@@ -151,6 +151,7 @@ O sistema deve ter uma interface web simples, limpa e responsiva, permitindo que
 O sistema deve ser acessível através de navegadores web modernos (como Google Chrome, Mozilla Firefox, Microsoft Edge e Safari), sem a necessidade de instalação de plugins adicionais.
 
 ## 3. Organização das tabelas.
+O banco de dados do StockHub é composto por 6 tabelas principais integradas: produtos (dados dos itens), estoque (quantidades e saldo), cliente (compradores), vendedor (equipe de vendas), vendas (registro de transações) e conecte-se (usuários do sistema).
 
 ``` mermaid
 
@@ -216,6 +217,13 @@ erDiagram
 
 ## 4. Fluxo de funcionamento
 
+1- O usuário realiza login no sistema através da tela inicial.
+
+2- No Painel Principal, ele tem acesso aos cadastros de produtos, clientes e vendedores.
+
+3- Ao cadastrar um produto, o registro é salvo e seu saldo é inicializado na tabela de estoque.
+
+4- No PDV / Módulo de Vendas, o sistema permite registrar saídas de produtos, realizando a baixa automática no estoque e gerando o histórico da transação.
 ```mermaid
 graph LR
     Usuario["Usuário / Operador"]
@@ -262,13 +270,13 @@ graph LR
 |  | `quantidade_estoque` | Quantidade de produto que tem em estoque | `int` | `0-9` | `NOT NULL` | 
 |  | `fornecedor` | Nome do fornecedor do produto | `varchar(255)` | `A-Z` | `NOT NULL` | 
 | **login** | `id_login` | PK para identificar o id de login | `int` | `0-9` | `NOT NULL` | 
-|  | `nome` | Nome do funcionário | `vachar(200)` | `A-Z` | `NOT NULL` | 
+|  | `nome` | Nome do funcionário | `varchar(200)` | `A-Z` | `NOT NULL` | 
 |  | `email` | E-mail do funcionário | `varchar(255)` | `A-Z` | `NOT NULL` | 
 |  | `cpf` | CPF do funcionário | `varchar(14)` | `0-9` | `NOT NULL` | 
 |  | `senha` | Senha de login do funcionário | `varchar(255)` | `A-Z` | `NOT NULL` | 
 | **cliente** | `id_cliente` | PK para identificar o id do cliente | `int` | `0-9` | `NOT NULL` | 
 |  | `nome_cliente` | Nome do cliente | `varchar(255)` | `A-Z` | `NOT NULL` | 
-|  | `cpf` | CPF do cliente | `varcha(14)` | `0-9` | `NOT NULL` | 
+|  | `cpf` | CPF do cliente | `varchar(14)` | `0-9` | `NOT NULL` | 
 |  | `telefone` | Telefone do cliente | `varchar(20)` | `0-9` | `NOT NULL` | 
 |  | `endereco` | Endereço do cliente | `varchar(255)` | `A-Z` | `NOT NULL` | 
 | **vendedor** | `id_vendedor` | PK para identificar o id do vendedor | `int` | `0-9` | `NOT NULL` | 
@@ -336,11 +344,11 @@ graph LR
     ├── login.php
     ├── logout.php
     └── verifica_user.php
->>>>>>> 4a06397942fd88e477c42e7f61be431f6da2e987
 ```     
 ## 7. Protótipo
-
+Para visualizar a prototipagem navegável das telas e o design das interfaces, consulte o arquivo login-preview.html ou acesse a documentação visual do projeto.
 Protótipo do site produzido:
+
 <img width="1510" height="716" alt="image" src="https://github.com/user-attachments/assets/cfdcba49-d1be-4c50-b1ab-4448037ddaae" />
 <img width="1459" height="798" alt="image" src="https://github.com/user-attachments/assets/a79f008d-95ac-4016-922f-bce76f356edd" />
 
