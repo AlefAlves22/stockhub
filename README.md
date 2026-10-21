@@ -32,7 +32,8 @@ psql -U postgres
 2 - Dentro do ambiente do psql, execute os comandos abaixo para recriar a base de dados zerada (se a base já existir, ela será substituída):
 ```bash
 DROP DATABASE IF EXISTS stockhub;
-CREATE DATABASE stockhub;
+CREATE USER estoquista WITH PASSWORD estoque;
+CREATE DATABASE stockhub OWNER estoquista;
 \q
 ```
 Atenção: a exclusão do banco apaga os dados existentes. Faça isso somente se não precisar preservá-los.
@@ -44,7 +45,7 @@ Agora, restaure a estrutura e os dados do arquivo SQL na base recém-criada.
 Se o arquivo dump.sql estiver na raiz do projeto::
 ```bash
 # Restaura o banco de dados
-psql -U postgres -d stockhub -f dump.sql
+psql -U estoquista -d stockhub -f /database/dump.sql
 
 ```
 
@@ -54,7 +55,7 @@ Se o arquivo estiver dentro de uma pasta chamada database, utilize:
 cd db
 
 # Restaura o banco de dados
-psql -U postgres -d stockhub -f dump.sql
+psql -U estoquista -d stockhub -f /database/dump.sql
 
 # Volte para a raiz do projeto
 cd ..
