@@ -151,6 +151,7 @@ O sistema deve ter uma interface web simples, limpa e responsiva, permitindo que
 O sistema deve ser acessível através de navegadores web modernos (como Google Chrome, Mozilla Firefox, Microsoft Edge e Safari), sem a necessidade de instalação de plugins adicionais.
 
 ## 3. Organização das tabelas.
+O banco de dados do StockHub é composto por 6 tabelas principais integradas: produtos (dados dos itens), estoque (quantidades e saldo), cliente (compradores), vendedor (equipe de vendas), vendas (registro de transações) e conecte-se (usuários do sistema).
 
 ``` mermaid
 
@@ -208,14 +209,20 @@ erDiagram
     }   
     
     produtos ||--o{ vendas : "geram"
-    login ||--o{ produtos : "cadastra"
     estoque ||--|| produtos : "pertence a"
     vendedor ||--o{ vendas : "realiza"
     cliente ||--o{ vendas : "comtem em"
 ```
 
-## Fluxo de funcionamento
+## 4. Fluxo de funcionamento
 
+1- O usuário realiza login no sistema através da tela inicial.
+
+2- No Painel Principal, ele tem acesso aos cadastros de produtos, clientes e vendedores.
+
+3- Ao cadastrar um produto, o registro é salvo e seu saldo é inicializado na tabela de estoque.
+
+4- No PDV / Módulo de Vendas, o sistema permite registrar saídas de produtos, realizando a baixa automática no estoque e gerando o histórico da transação.
 ```mermaid
 graph LR
     Usuario["Usuário / Operador"]
@@ -244,7 +251,7 @@ graph LR
     end
 ```
 
-## Dicionário de Dados
+## 5. Dicionário de Dados
 
 | NOME DA TABELA | NOME DO CAMPO | DESCRIÇÃO DO CAMPO | TIPO DE DADO | MÁSCARA | OPÇÕES DE COLUNA | 
 | ----- | ----- | ----- | ----- | ----- | ----- | 
@@ -262,13 +269,13 @@ graph LR
 |  | `quantidade_estoque` | Quantidade de produto que tem em estoque | `int` | `0-9` | `NOT NULL` | 
 |  | `fornecedor` | Nome do fornecedor do produto | `varchar(255)` | `A-Z` | `NOT NULL` | 
 | **login** | `id_login` | PK para identificar o id de login | `int` | `0-9` | `NOT NULL` | 
-|  | `nome` | Nome do funcionário | `vachar(200)` | `A-Z` | `NOT NULL` | 
+|  | `nome` | Nome do funcionário | `varchar(200)` | `A-Z` | `NOT NULL` | 
 |  | `email` | E-mail do funcionário | `varchar(255)` | `A-Z` | `NOT NULL` | 
 |  | `cpf` | CPF do funcionário | `varchar(14)` | `0-9` | `NOT NULL` | 
 |  | `senha` | Senha de login do funcionário | `varchar(255)` | `A-Z` | `NOT NULL` | 
 | **cliente** | `id_cliente` | PK para identificar o id do cliente | `int` | `0-9` | `NOT NULL` | 
 |  | `nome_cliente` | Nome do cliente | `varchar(255)` | `A-Z` | `NOT NULL` | 
-|  | `cpf` | CPF do cliente | `varcha(14)` | `0-9` | `NOT NULL` | 
+|  | `cpf` | CPF do cliente | `varchar(14)` | `0-9` | `NOT NULL` | 
 |  | `telefone` | Telefone do cliente | `varchar(20)` | `0-9` | `NOT NULL` | 
 |  | `endereco` | Endereço do cliente | `varchar(255)` | `A-Z` | `NOT NULL` | 
 | **vendedor** | `id_vendedor` | PK para identificar o id do vendedor | `int` | `0-9` | `NOT NULL` | 
@@ -281,62 +288,7 @@ graph LR
 |  | `quantidade` | Quantidade do produto vendido | `number` | `0-9` | `NOT NULL` | 
 |  | `data_venda` | Data de quando foi realizada a venda | `datetime` | `0-9` | `NOT NULL` |
 
-<<<<<<< HEAD
-## Estrutura das pastas
-C:.
-ª   docuentaþÒo.md
-ª   estrutura.txt
-ª   index.php
-ª   README.md
-ª   
-+---app
-ª       atualizar.php
-ª       atualizar_cliente.php
-ª       atualizar_estoque.php
-ª       atualizar_produto.php
-ª       atualizar_vendedor.php
-ª       cadastrar.php
-ª       cadastrar_cliente.php
-ª       cadastra_vendedor.php
-ª       consultar.php
-ª       consultar_cliente.php
-ª       consultar_vendedor.php
-ª       create.php
-ª       delete.php
-ª       delete_cliente.php
-ª       delete_vendedor.php
-ª       excluir.php
-ª       pdv.php
-ª       select.php
-ª       select_cliente.php
-ª       select_geral.php
-ª       select_vendas.php
-ª       select_vendedor.php
-ª       select_w.php
-ª       venda.php
-ª       
-+---css
-ª       style.css
-ª       
-+---database
-ª       connect.php
-ª       dump.sql
-ª       
-+---imagens
-ª       logo.png
-ª       
-+---includes
-ª       footer.php
-ª       functions.php
-ª       header.php
-ª       
-+---login
-        cadastra_user.php
-        login.php
-        logout.php
-        verifica_user.php
-=======
-## Estrutura do Projeto
+## 6. Estrutura do Projeto
 
 ```text
 .
@@ -391,7 +343,26 @@ C:.
     ├── login.php
     ├── logout.php
     └── verifica_user.php
->>>>>>> 4a06397942fd88e477c42e7f61be431f6da2e987
-        
+```     
+## 7. Protótipo
+Para visualizar a prototipagem navegável das telas e o design das interfaces, consulte o arquivo login-preview.html ou acesse a documentação visual do projeto.
+Protótipo do site produzido:
 
+<img width="1510" height="716" alt="image" src="https://github.com/user-attachments/assets/cfdcba49-d1be-4c50-b1ab-4448037ddaae" />
+<img width="1459" height="798" alt="image" src="https://github.com/user-attachments/assets/a79f008d-95ac-4016-922f-bce76f356edd" />
 
+## 8. Considerações Finais
+
+O **StockHub** foi desenvolvido com o objetivo de entregar uma solução funcional, intuitiva e completa para a gestão de inventários e processos de vendas. Através da implementação da arquitetura em PHP e PostgreSQL, o sistema atende integralmente a todos os requisitos do CRUD, garantindo a integridade dos dados e a agilidade no controle de estoque.
+
+---
+
+### ✉️ Contato e Autoria
+
+Projeto desenvolvido por **Alef Alves**.
+
+* **GitHub:** [@AlefAlves22](https://github.com/AlefAlves22)
+* **Repositório do Projeto:** [StockHub](https://github.com/AlefAlves22/stockhub)
+
+---
+*Obrigado por visualizar o projeto! Se tiver alguma dúvida ou sugestão de melhoria, sinta-se à vontade para abrir uma Issue no repositório.*
